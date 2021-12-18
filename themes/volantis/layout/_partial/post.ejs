@@ -54,7 +54,7 @@
       <%- (post.title || post.seo_title) ? (post.title || post.seo_title) : date(post.date, theme.article.body.meta_library.date.format) %>
     </span>
   <% } %>
-  <div class='md' itemprop="articleBody">
+  <div class='md article-desc' itemprop="articleBody">
     <% if (post.excerpt) { %>
       <%- post.excerpt %>
     <% } else if (post.description) { %>
@@ -62,7 +62,7 @@
     <% } else if (post.content) { %>
       <% if (theme.article.preview.auto_excerpt) { %>
         <%- truncate(strip_html(post.content), {length: 200}) %>
-      <% } else { %>
+      <% } else if(!theme.article.preview.hide_excerpt) { %>
         <%- post.content %>
       <% } %>
     <% } %>

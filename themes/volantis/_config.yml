@@ -127,6 +127,8 @@ article:
     auto_title: true # false, true
     # auto generate excerpt if not exist
     auto_excerpt: true # false, true
+    # hide excerpt
+    hide_excerpt: false
     # show split line or not
     line_style: solid # hidden, solid, dashed, dotted
     # show author
@@ -184,7 +186,7 @@ article:
       # 默认文章作者（可在 _data/author.yaml 中增加其他作者，并在 front-matter 中设置）
       # https://volantis.js.org/advanced-settings/#多人协同
       author:
-        avatar:
+        avatar: https://cdn.jsdelivr.net/gh/volantis-x/cdn-org/blog/favicon/apple-touch-icon.png
         name: 请设置文章作者
         url: /
       # 文章创建日期
@@ -244,21 +246,19 @@ comments:
   # https://artalk.js.org/
   # https://github.com/ArtalkJS/Artalk
   artalk:
-    js: https://cdn.jsdelivr.net/npm/artalk@2.0.4/dist/Artalk.js
-    css: https://cdn.jsdelivr.net/npm/artalk@2.0.4/dist/Artalk.css
-    server: http://127.0.0.1:8080/api    # 后端服务地址
+    js: https://cdn.jsdelivr.net/npm/artalk@2.1.3/dist/Artalk.js
+    css: https://cdn.jsdelivr.net/npm/artalk@2.1.3/dist/Artalk.css
+    server: http://127.0.0.1:8080/api    # 修改为自建的后端服务地址
     path:  # 全局评论地址
+    # 更多选项 https://artalk.js.org/guide/frontend/config.htm 按照yml格式继续填写即可 
+    # 除了 [el pageKey pageTitle site] 选项
+    # 下面是一些例子：
     placeholder: 来啊，快活啊 ( ゜- ゜)   # 全局评论占位
     noComment: 快来成为第一个评论的人吧~  # 评论为空时，评论列表显示字符
-    # 可选配置，按需使用
-    #sendBtn:       # 发送按钮文字
-    #emoticons:     # 表情包
-    #defaultAvatar: # 默认头像（URL or Gravatar Type）
-    #gravatar:      # 头像 Gravatar Url
-    #  cdn:         # "https://sdn.geekzu.org/avatar/"
-    #readMore:      # 查看更多配置：pageSize每次请求获取数量，autoLoad滚动到底部自动加载
-    #  pageSize:    # 15
-    #  autoLoad:    # false
+    pagination:
+      readMore: true   # 加载更多模式
+      autoLoad: false  # 滚动到底部自动加载
+      pageSize: 10     # 每次请求获取数量
     
   # giscus
   # https://giscus.app
@@ -721,7 +721,7 @@ plugins:
     type: playlist    # song, playlist, album, search, artist
     id: 3175833810    # song id / playlist id / album id / search keyword
     # Optional
-    fixed: false      # enable fixed mode
+    fixed: true      # enable fixed mode
     theme: '#1BCDFC'  # main color
     autoplay: false   # audio autoplay
     order: list       # player play order, values: 'list', 'random'
@@ -729,6 +729,7 @@ plugins:
     volume: 0.7       # default volume, notice that player will remember user setting, default volume will not work after user set volume themselves
     list_max_height: 320px # list max height
     list_folded: true
+    autoHide: true    # hide automaticaly
 
   # Pjax
   pjax:
@@ -874,6 +875,13 @@ plugins:
   # https://gitter.im
   gitter:
     room: xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+  
+  # swiper
+  # https://www.swiper.com.cn/
+  swiper:
+    enable: true
+    css: https://unpkg.com/swiper@6/swiper-bundle.min.css
+    js: https://unpkg.com/swiper@6/swiper-bundle.min.js
 
 ############################### Plugins ############################### > end
 

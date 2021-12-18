@@ -22,6 +22,14 @@
       site: '<%= config.title %>',
       darkMode: volantis.dark.mode === "dark"
     }));
+
+    volantis.artalk.on('comments-loaded', () => {
+      const checkFancyBox = setInterval(() => {
+        if(typeof volantisFancyBox === "undefined") return;
+        clearInterval(checkFancyBox);
+        volantisFancyBox.reloadFancyBox('.atk-content img:not([atk-emoticon])', 'Comments');
+      })
+    })
   }
 
   load_artalk();
