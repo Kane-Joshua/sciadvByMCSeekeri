@@ -52,9 +52,9 @@ const SitesJS = {
       arr.forEach((item, i) => {
         var cell = '<div class="site-card">';
         cell += '<a class="card-link" target="_blank" rel="external noopener noreferrer" href="' + item.url + '">';
-        cell += '<img alt="' + item.title + '" src="' + (item.screenshot || ('https://image.thum.io/get/width/1024/crop/768/' + item.url)) + '" onerror="javascript:this.onerror=null;this.src=\'' + cfg.screenshot + '\';"/>';
+        cell += '<img alt="' + item.title + '" src="' + (item.screenshot || ('https://image.thum.io/get/width/1024/crop/768/' + item.url)) + '" onerror="errorImgCover(this)"/>';
         cell += '<div class="info">';
-        cell += '<img alt="' + item.title + '" src="' + (item.avatar || cfg.avatar) + '" onerror="javascript:this.onerror=null;this.src=\'' + cfg.avatar + '\';"/>';
+        cell += '<img alt="' + item.title + '" src="' + (item.avatar || cfg.avatar) + '" onerror="errorImgAvatar(this)"/>';
         cell += '<span class="title">' + item.title + '</span>';
         cell += '<span class="desc">' + (item.description || item.url) + '</span>';
         cell += '</div>';
@@ -82,8 +82,8 @@ const SitesJS = {
       cfg.class = el.getAttribute('class');
       cfg.el = el;
       cfg.api = api;
-      cfg.avatar = volantis.THEMECONFIG.default.link;
-      cfg.screenshot = volantis.THEMECONFIG.default.cover;
+      cfg.avatar = volantis.GLOBAL_CONFIG.default.link;
+      cfg.screenshot = volantis.GLOBAL_CONFIG.default.cover;
       SitesJS.layout(cfg);
     }
   }

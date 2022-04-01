@@ -18,11 +18,38 @@ default:
 ############################### Volantis ###############################
 info:
   theme_name: Volantis # This is theme's name.
-  theme_version: '5.0.0-alpha.8' # This is theme's version.
+  theme_version: '5.0.0-alpha.10' # This is theme's version.
   theme_docs: https://volantis.js.org/ # This is theme's URL.
   theme_repo: https://github.com/volantis-x/hexo-theme-volantis
 # Debug 调试模式
 debug: false
+############################### CSP ###############################
+# 内容安全策略( CSP )
+# https://developer.mozilla.org/zh-CN/docs/Web/HTTP/CSP
+# https://content-security-policy.com/
+csp:
+  content: "
+    default-src 'self' https:;
+    block-all-mixed-content;
+    base-uri 'self' https:;
+    form-action 'self' https:;
+    worker-src 'self' https:;
+    connect-src 'self' https: *;
+    img-src 'self' data: https: *;
+    media-src 'self' https: *;
+    font-src 'self' data: https: *;
+    frame-src 'self' https: *;
+    manifest-src 'self' https: *;
+    child-src https:;
+    script-src 'self' https: 'unsafe-inline' *;
+    style-src 'self' https: 'unsafe-inline' *;
+  "
+  # 可以使用自动程序替换默认的 'unsafe-inline' 和 * 生成更严格的内容安全策略.
+  # hexo_fliter_sha256 用于 hexo g 时替换 'unsafe-inline' 生成 script-src 'sha256-' , 只适用于外层不含有压缩工具得场景.
+  # 如果外层含有压缩工具会改变 hash 导致无效,hexo_fliter_sha256 需设为false, 使用 gulp 方案.
+  hexo_fliter_sha256: false
+  # 另可以参考官网的 gulp 方案.
+  # gulpfile.js https://github.com/volantis-x/community/blob/main/gulpfile.js
 ############################### CDN ###############################
 # 本地静态文件使用jsdelivr的min版本加速 https://www.jsdelivr.com/features
 # 默认使用 https://cdn.jsdelivr.net/npm/hexo-theme-volantis@<%- theme.info.theme_version %>/source/js/*.min.js 的CDN压缩版本(min.js)，注意版本号对应关系！！可以通过修改以下配置项覆盖
@@ -32,13 +59,15 @@ cdn:
   # CDN 前缀，为空使用默认值，链接最后不加 "/",
   # 例如： https://cdn.jsdelivr.net/gh/volantis-x/volantis-x.github.io@gh-page 填写最后编译生成的源码CDN地址前缀，此路径下应该含有/js与/css目录,
   # 该配置默认值是："https://cdn.jsdelivr.net/npm/hexo-theme-volantis@"+ theme.info.theme_version +"/source"
-  prefix: https://npm.elemecdn.com/hexo-theme-volantis@5.0.0-rc.2/source
+  prefix: https://npm.elemecdn.com/hexo-theme-volantis@5.0.0-rc.4/source
   # 以下配置可以覆盖 cdn.prefix,配置项的值可以为空，但是要使用CDN必须依据路径填写配置项的键
   set:
     js:
       app: /js/app.js
     css:
       style: /css/style.css # (异步加载样式)
+# 请求静态资源添加时间戳 ?time=1648684470140
+cdn_version: true
 ########################################################################
 # 全局页面字符串替换  A => B (可用于临时修改错字等)
 replace:
@@ -57,22 +86,22 @@ navbar:
     title:
   menu:
     - name: 博客
-      icon: fas fa-rss
+      icon: fa-solid fa-rss
       url: /
     - name: 分类
-      icon: fas fa-folder-open
+      icon: fa-solid fa-folder-open
       url: categories/
     - name: 标签
-      icon: fas fa-tags
+      icon: fa-solid fa-tags
       url: tags/
     - name: 归档
-      icon: fas fa-archive
+      icon: fa-solid fa-archive
       url: archives/
     - name: 友链
-      icon: fas fa-link
+      icon: fa-solid fa-link
       url: friends/
     - name: 关于
-      icon: fas fa-info-circle
+      icon: fa-solid fa-info-circle
       url: about/
   search: Search...   # Search bar placeholder
 ############################### Navigation Bar ############################### > end
@@ -156,7 +185,7 @@ article:
       # 参考资料、相关资料等 (for layout: post/docs)
       references:
         title: 参考资料
-        icon: fas fa-quote-left
+        icon: fa-solid fa-quote-left
         # 在 front-matter 中:
         #   references:
         #     - title: 某篇文章
@@ -168,7 +197,7 @@ article:
       related_posts:
         enable: false
         title: 相关文章
-        icon: fas fa-bookmark
+        icon: fa-solid fa-bookmark
         max_count: 5
         # 设为空则不使用文章头图
         placeholder_img: https://uploadbeta.com/api/pictures/random/?key=BingEverydayWallpaperPicture
@@ -200,35 +229,35 @@ article:
         url: /
       # 文章创建日期
       date:
-        icon: fas fa-calendar-alt
+        icon: fa-solid fa-calendar-alt
         title: '发布于：'
         format: 'll' # 日期格式 http://momentjs.com/docs/
       # 文章更新日期
       updated:
-        icon: fas fa-edit
+        icon: fa-solid fa-edit
         title: '更新于：'
         format: 'll' # 日期格式 http://momentjs.com/docs/
       # 文章分类
       category:
-        icon: fas fa-folder-open
+        icon: fa-solid fa-folder-open
       # 文章浏览计数
       counter:
-        icon: fas fa-eye
+        icon: fa-solid fa-eye
         unit: '次浏览'
       # 文章评论数量：支持 valine和waline
       valinecount:
-        icon: fas fa-comment-dots
+        icon: fa-solid fa-comment-dots
         desc: '' # 条评论
       walinecount:
-        icon: fas fa-comment-dots
+        icon: fa-solid fa-comment-dots
         desc: '' # 条评论
       # 文章字数和阅读时长
       wordcount:
-        icon_wordcount: fas fa-keyboard
-        icon_duration: fas fa-hourglass-half
+        icon_wordcount: fa-solid fa-keyboard
+        icon_duration: fa-solid fa-hourglass-half
       # 文章标签
       tags:
-        icon: fas fa-hashtag
+        icon: fa-solid fa-hashtag
       # 分享
       share:
         - id: qq
@@ -246,7 +275,7 @@ article:
 
 ############################### Comments ############################### > start
 comments:
-  title: <i class='fas fa-comments'></i> 评论
+  title: <i class='fa-solid fa-comments'></i> 评论
   subtitle:
   service: giscus
   # 可选评论系统 #
@@ -273,9 +302,6 @@ comments:
   # https://giscus.app
   # https://github.com/laymonage/giscus
   giscus:
-    theme:
-      light: "light" # https://cdn.jsdelivr.net/gh/volantis-x/cdn-volantis@master/css/giscus/light.css
-      dark: "dark" # https://cdn.jsdelivr.net/gh/volantis-x/cdn-volantis@master/css/giscus/dark.css
     # 以下配置按照 yml 格式增删填写即可
     # repo: xxx/xxx
     # repo-id: xxx
@@ -285,6 +311,10 @@ comments:
     # reactions-enabled: "1"
     # emit-metadata: "0"
     # lang: "zh-CN"
+    # 以上配置按照 yml 格式增删填写即可
+    theme:
+      light: "light" # https://cdn.jsdelivr.net/gh/volantis-x/cdn-volantis@master/css/giscus/light.css
+      dark: "dark" # https://cdn.jsdelivr.net/gh/volantis-x/cdn-volantis@master/css/giscus/dark.css
 
   # beaudar
   # https://beaudar.lipk.org/
@@ -415,7 +445,7 @@ comments:
   # Waline
   # https://waline.js.org/
   waline:
-    js: https://cdn.jsdelivr.net/npm/@waline/client/dist/Waline.min.js
+    js: https://npm.elemecdn.com/@waline/client@1.6.0/dist/Waline.min.js
     path: # 全局评论地址 目前设置全局评论地址后visitor失效,这是waline的问题
     placeholder: 快来评论吧~  # 评论占位提示
     # imageHosting: https://7bu.top/api/upload?token=7ffe9d626fe4315c953758efbdb6ee2e # 图床api（默认注释使用base64）
@@ -453,13 +483,13 @@ sidebar:
       subtitle:
       jinrishici: true # Poetry Today. You can set a string, and it will be displayed when loading fails.
       social:
-        - icon: fas fa-rss
+        - icon: fa-solid fa-rss
           url: /atom.xml
-        - icon: fas fa-envelope
+        - icon: fa-solid fa-envelope
           url: mailto:me@xxx.com
         - icon: fab fa-github
           url: https://github.com/volantis-x/
-        - icon: fas fa-headphones-alt
+        - icon: fa-solid fa-headphones-alt
           url: /
     # ---------------------------------------
     # toc widget (valid only in articles)
@@ -467,7 +497,7 @@ sidebar:
       class: toc
       display: [desktop, mobile] # [desktop, mobile]
       header:
-        icon: fas fa-list
+        icon: fa-solid fa-list
         title: 本文目录
       list_number: false
       min_depth: 2
@@ -484,7 +514,7 @@ sidebar:
       class: category
       display: [desktop] # [desktop, mobile]
       header:
-        icon: fas fa-folder-open
+        icon: fa-solid fa-folder-open
         title: 文章分类
         url: /blog/categories/
     # ---------------------------------------
@@ -493,7 +523,7 @@ sidebar:
       class: tagcloud
       display: [desktop, mobile] # [desktop, mobile]
       header:
-        icon: fas fa-tags
+        icon: fa-solid fa-tags
         title: 热门标签
         url: /blog/tags/
       min_font: 14
@@ -516,7 +546,7 @@ sidebar:
       class: webinfo
       display: [desktop]
       header:
-        icon: fas fa-award
+        icon: fa-solid fa-award
         title: 站点信息
       type:
         article:
@@ -553,7 +583,7 @@ sidebar:
       class: lastupdate
       display: [desktop, mobile]
       header:
-        icon: fas fa-clock WISTERIA
+        icon: fa-solid fa-clock WISTERIA
         title: 最近更新
 ############################### Sidebar ############################### > end
 
@@ -565,7 +595,7 @@ tag_plugins:
   note: # style for default note:
     icon: '\f054'
     color: ''
-    iconfont: 'Font Awesome 5 Free'
+    iconfont: 'Font Awesome 6 Free'
   # {% checkbox %}
   checkbox:
     interactive: false # enable interactive for user
@@ -581,7 +611,7 @@ site_footer:
   # layout of footer: [aplayer, social, license, info, copyright]
   layout: [aplayer, social, license, analytics, info, copyright]
   social:
-    - icon: #fas fa-rss
+    - icon: #fa-solid fa-rss
       url:
     # or
     - img:
@@ -593,8 +623,8 @@ site_footer:
   source: https://github.com/volantis-x/volantis-docs/
   # analytics using leancloud
   analytics: >
-    <span id="lc-sv">本站总访问量为 <span id='number'><i class="fas fa-circle-notch fa-spin fa-fw" aria-hidden="true"></i></span> 次</span>
-    <span id="lc-uv">访客数为 <span id='number'><i class="fas fa-circle-notch fa-spin fa-fw" aria-hidden="true"></i></span> 人</span>
+    <span id="lc-sv">本站总访问量为 <span id='number'><i class="fa-solid fa-circle-notch fa-spin fa-fw" aria-hidden="true"></i></span> 次</span>
+    <span id="lc-uv">访客数为 <span id='number'><i class="fa-solid fa-circle-notch fa-spin fa-fw" aria-hidden="true"></i></span> 人</span>
   # site copyright
   copyright: '[Copyright © 2017-2020 XXX](/)'
   # You can add your own property here. (Support markdown, for example: br: '<br>')
@@ -607,8 +637,8 @@ plugins:
   # jquery
   globalJquery: false # 全局引入 jquery
   jquery: /libs/jquery/dist/jquery.min.js # https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js
-  # fontawesome Pro 版本：https://cdn.jsdelivr.net/gh/inkss/fontawesome@5.15.3/css/all.min.css
-  fontawesome: /libs/@fortawesome/fontawesome-free/css/all.min.css # https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.14/css/all.min.css
+  # fontawesome Pro 版本：https://cdn.jsdelivr.net/gh/inkss/fontawesome@6.0.0/css/all.min.css
+  fontawesome: /libs/@fortawesome/fontawesome-free/css/all.min.css # https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1/css/all.min.css
   # katex@0.15.2
   katex:
     js: /libs/katex/katex.min.js # https://cdn.jsdelivr.net/npm/katex@0.15.2/dist/katex.min.js
@@ -702,7 +732,8 @@ plugins:
     css: /libs/node-waves/dist/waves.min.css # https://cdn.jsdelivr.net/npm/node-waves@0.7.6/dist/waves.min.css
     js: /libs/node-waves/dist/waves.min.js # https://cdn.jsdelivr.net/npm/node-waves@0.7.6/dist/waves.min.js
 
-  # fontawesome animation
+  # fontawesome V6:  https://fontawesome.com/docs/web/style/animate
+  # fontawesome animation for fontawesome V5
   fontawesome_animation:
     enable: #true
     css: /libs/font-awesome-animation/font-awesome-animation.min.css # https://cdn.jsdelivr.net/gh/l-lin/font-awesome-animation/dist/font-awesome-animation.min.css
@@ -781,7 +812,7 @@ plugins:
   # 暗黑模式 darkmode
   # 开关按钮：在 navbar.menu 中添加：
   # - name: 暗黑模式 # 可自定义
-  #   icon: fas fa-moon # 可自定义
+  #   icon: fa-solid fa-moon # 可自定义
   #   toggle: darkmode
   darkmode:
     enable: #true
@@ -850,24 +881,21 @@ plugins:
 
   # 友链朋友圈 hexo-circle-of-friends
   # https://github.com/Rock-Candy-Tea/hexo-circle-of-friends
-  # https://zfe.space/post/friend-link-circle.html
+  # https://fcircle-doc.js.cool/
   fcircle:
     # Set `plugins: ["fcircle"]` to enable in front-matter
     # 支持 Pjax
     api: '' # api 地址
-    max_number: 20 # 页面展示文章数量
-    add_number: 10 # 每次加载增加的篇数
-    opentype: '_blank' # '_blank'打开新标签,'_self'本窗口打开
-    nofollow: true # 禁止搜索引擎抓取
-    imgError: https://cdn.jsdelivr.net/gh/Zfour/Butterfly-friend-poor-html/friendcircle/404.png
-    # loadingCutom: # 自定义loading图 例如: <i class="fa fa-spinner fa-spin"></i> | <img src="你的图片地址" alt="加载中...">
+    message: '与主机通讯中……'  # 占位文字
+    css: 'https://cdn.jsdelivr.net/gh/lmm214/immmmm/themes/hello-friend/static/fcircle-beta.css'
+    js: 'https://cdn.jsdelivr.net/gh/lmm214/immmmm/themes/hello-friend/static/fcircle-beta.js'
 
   # 消息提示
   message:
     enable: true
     icon:     # 默认图标，支持对图标添加颜色，可选值：see：/source/css/_style/_plugins/fontcolor.styl
-      default: fas fa-info-circle light-blue
-      quection: fas fa-question-circle light-blue
+      default: fa-solid fa-info-circle light-blue
+      quection: fa-solid fa-question-circle light-blue
     time:     # 默认持续时间
       default: 5000
       quection: 20000
@@ -885,8 +913,8 @@ plugins:
       icon: 'far fa-copyright light-blue'
     aplayer:                              # 是否开启音乐通知；播放、暂停、失败 时的图标
       enable: true
-      play: fas fa-play
-      pause: fas fa-pause
+      play: fa-solid fa-play
+      pause: fa-solid fa-pause
     rightmenu:                            
       enable: true                        # 是否开启右键模块的消息通知
       notice: true                        # 唤醒原右键菜单的通知 
@@ -928,14 +956,13 @@ plugins:
 # 自定义右键菜单
 rightmenu:
   enable: true
-  faicon: fa              # 公共图标类型 fa fal fas fad
+  faicon: fa              # 公共图标类型 fa fal fa-solid fa-duotone
   # hr: 分割线, music: 音乐控制器
   layout: [home, hr, help, examples, contributors, hr, source_docs, source_theme, hr, print, darkmode, reading, music]
   ### 可选功能项 ###
   print:                  # 只有文章页才允许自定义打印
     name: 打印页面
     icon: fa fa-print
-    defaultStyles: true   # 是否使用预制的打印样式
   darkmode:        # 需开启 plugins.darkmodejs
     name: 暗黑模式
     icon: fa fa-moon

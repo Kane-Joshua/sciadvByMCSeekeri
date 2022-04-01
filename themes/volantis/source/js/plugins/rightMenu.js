@@ -1,7 +1,7 @@
 const RightMenu = (() => {
   const
-    rightMenuConfig = volantis.THEMECONFIG.rightmenu,
-    messageRightMenu = volantis.THEMECONFIG.plugins.message.enable && volantis.THEMECONFIG.plugins.message.rightmenu.enable;
+    rightMenuConfig = volantis.GLOBAL_CONFIG.plugins.rightmenu,
+    messageRightMenu = volantis.GLOBAL_CONFIG.plugins.message.enable && volantis.GLOBAL_CONFIG.plugins.message.rightmenu.enable;
 
   const
     fn = {},
@@ -82,7 +82,7 @@ const RightMenu = (() => {
       _rightMenuWrapper.style.left = showLeft + "px";
       _rightMenuWrapper.style.top = showTop + "px";
       _rightMenuWrapper.style.zIndex = '2147483648';
-      if (volantis.THEMECONFIG.plugins.message.rightmenu.notice) fn.showMessage();
+      if (volantis.GLOBAL_CONFIG.plugins.message.rightmenu.notice) fn.showMessage();
     } catch (error) {
       _rightMenuWrapper.blur();
       console.error(error);
@@ -270,10 +270,10 @@ const RightMenu = (() => {
       DOMController.visible(_readingModel, false);
     }
 
-    if (volantis.THEMECONFIG.plugins.aplayer.enable 
-      && typeof RightMenuAplayer !== 'undefined' 
+    if (volantis.GLOBAL_CONFIG.plugins.aplayer.enable
+      && typeof RightMenuAplayer !== 'undefined'
       && RightMenuAplayer.APlayer.player !== undefined) {
-      if (rightMenuConfig.music.alwaysShow) {
+      if (rightMenuConfig.music_alwaysShow) {
         DOMController.visible(_menuMusic);
       } else if (RightMenuAplayer.APlayer.status === 'play' || RightMenuAplayer.APlayer.status === 'undefined') {
         optionFlag = true;
@@ -289,8 +289,8 @@ const RightMenu = (() => {
       DOMController.visible(ele, !optionFlag);
     })
 
-    if (volantis.THEMECONFIG.plugins.aplayer.enable
-      && volantis.THEMECONFIG.rightmenu.layout.includes('music')) {
+    if (volantis.GLOBAL_CONFIG.plugins.aplayer.enable
+      && rightMenuConfig.layout.includes('music')) {
       RightMenuAplayer.checkAPlayer();
     }
   }
@@ -437,40 +437,38 @@ const RightMenu = (() => {
   // 执行打印页面 
   fn.printHtml = () => {
     if (volantis.isReadModel) fn.readingModel();
-    if (rightMenuConfig.print.defaultStyles) {
-      DOMController.setAttribute('details', 'open', 'true');
-      DOMController.remove('.cus-article-bkg');
-      DOMController.remove('.iziToast-overlay');
-      DOMController.remove('.iziToast-wrapper');
-      DOMController.remove('.prev-next');
-      DOMController.remove('footer');
-      DOMController.remove('#l_header');
-      DOMController.remove('#l_cover');
-      DOMController.remove('#l_side');
-      DOMController.remove('#comments');
-      DOMController.remove('#s-top');
-      DOMController.remove('#BKG');
-      DOMController.remove('#rightmenu-wrapper');
-      DOMController.remove('.nav-tabs');
-      DOMController.remove('.parallax-mirror');
-      DOMController.remove('.new-meta-item.share');
-      DOMController.remove('div.footer');
-      DOMController.setStyle('body', 'backgroundColor', 'unset');
-      DOMController.setStyle('#l_main', 'width', '100%');
-      DOMController.setStyle('#post', 'boxShadow', 'none');
-      DOMController.setStyle('#post', 'background', 'none');
-      DOMController.setStyle('#post', 'padding', '0');
-      DOMController.setStyle('h1', 'textAlign', 'center');
-      DOMController.setStyle('h1', 'fontWeight', '600');
-      DOMController.setStyle('h1', 'fontSize', '2rem');
-      DOMController.setStyle('h1', 'marginBottom', '20px');
-      DOMController.setStyle('.tab-pane', 'display', 'block');
-      DOMController.setStyle('.tab-content', 'borderTop', 'none');
-      DOMController.setStyle('.highlight>table pre', 'whiteSpace', 'pre-wrap');
-      DOMController.setStyle('.highlight>table pre', 'wordBreak', 'break-all');
-      DOMController.setStyle('.fancybox img', 'height', 'auto');
-      DOMController.setStyle('.fancybox img', 'weight', 'auto');
-    }
+    DOMController.setAttribute('details', 'open', 'true');
+    DOMController.remove('.cus-article-bkg');
+    DOMController.remove('.iziToast-overlay');
+    DOMController.remove('.iziToast-wrapper');
+    DOMController.remove('.prev-next');
+    DOMController.remove('footer');
+    DOMController.remove('#l_header');
+    DOMController.remove('#l_cover');
+    DOMController.remove('#l_side');
+    DOMController.remove('#comments');
+    DOMController.remove('#s-top');
+    DOMController.remove('#BKG');
+    DOMController.remove('#rightmenu-wrapper');
+    DOMController.remove('.nav-tabs');
+    DOMController.remove('.parallax-mirror');
+    DOMController.remove('.new-meta-item.share');
+    DOMController.remove('div.footer');
+    DOMController.setStyle('body', 'backgroundColor', 'unset');
+    DOMController.setStyle('#l_main', 'width', '100%');
+    DOMController.setStyle('#post', 'boxShadow', 'none');
+    DOMController.setStyle('#post', 'background', 'none');
+    DOMController.setStyle('#post', 'padding', '0');
+    DOMController.setStyle('h1', 'textAlign', 'center');
+    DOMController.setStyle('h1', 'fontWeight', '600');
+    DOMController.setStyle('h1', 'fontSize', '2rem');
+    DOMController.setStyle('h1', 'marginBottom', '20px');
+    DOMController.setStyle('.tab-pane', 'display', 'block');
+    DOMController.setStyle('.tab-content', 'borderTop', 'none');
+    DOMController.setStyle('.highlight>table pre', 'whiteSpace', 'pre-wrap');
+    DOMController.setStyle('.highlight>table pre', 'wordBreak', 'break-all');
+    DOMController.setStyle('.fancybox img', 'height', 'auto');
+    DOMController.setStyle('.fancybox img', 'weight', 'auto');
 
     setTimeout(() => {
       window.print();
