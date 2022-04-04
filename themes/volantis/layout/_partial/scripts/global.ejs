@@ -7,7 +7,7 @@
   volantis.GLOBAL_CONFIG ={
     cdn: <%- JSON.stringify(theme.cdn.map) %>,
     default: <%- JSON.stringify(theme.default) %>,
-    lastupdate: new Date('<%- theme.getStartTime %>'),
+    lastupdate: new Date(<%- theme.getStartTime %>),
     sidebar: {
       for_page: <%- JSON.stringify(theme.sidebar.for_page) %>,
       for_post: <%- JSON.stringify(theme.sidebar.for_post) %>,
@@ -370,17 +370,17 @@
     window.scrollTo(opt);
     // 监视器
     // 监视并矫正元素滚动到指定位置 
-    // 目前用于处理 toc 部分 lazyload 引起的 cls 导致的定位失败问题
-    if (option.observer) {
-      volantis.scroll.unengine.push(()=>{
-        let me = ele.getBoundingClientRect().top
-        if(!(me >= -option.observerDic && me <= option.observerDic)){
-          volantis.scroll.to(ele, option)
-        }else{
-          volantis.scroll.unengine.remove("unengineObserver")
-        }
-      },"unengineObserver")
-    }
+    // 目前用于处理 toc 部分 lazyload 引起的 cls 导致的定位失败问题 [存在Bug]
+    // if (option.observer) {
+    //   volantis.scroll.unengine.push(()=>{
+    //     let me = ele.getBoundingClientRect().top
+    //     if(!(me >= -option.observerDic && me <= option.observerDic)){
+    //       volantis.scroll.to(ele, option)
+    //     }else{
+    //       volantis.scroll.unengine.remove("unengineObserver")
+    //     }
+    //   },"unengineObserver")
+    // }
   }
   /******************************************************************************/
   /******************************************************************************/
